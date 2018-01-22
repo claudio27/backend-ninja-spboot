@@ -1,5 +1,7 @@
 package com.claudio.backendninja.controller;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +19,8 @@ public class Example3 {
 	
 	public static final String FORM_VIEW = "form";
 	public static final String RESULT_VIEW = "result";
+
+	private static final Log LOGGER = LogFactory.getLog(Example3.class);
 	
 //	@GetMapping("/")
 //	public String redirect(){
@@ -30,17 +34,25 @@ public class Example3 {
 	
 	@GetMapping("/showform")
 	public String showForm(Model model){
+
 		model.addAttribute("person", new Person()); //(1)
-		int i = 5/0; // FIXME error generado para mostrar error 500 internal server
+	//	int i = 5/0; // FIXME error generado para mostrar error 500 internal server
 		return FORM_VIEW;
 		
 	}
 	
 	@PostMapping("/addperson")
 	// el nombre de la variable debe ser igual al nombre de (1)
-	public ModelAndView addPerson(@ModelAttribute("person") Person person){ 
+	public ModelAndView addPerson(@ModelAttribute("person") Person person){
+
+		LOGGER.info("METHOD: 'addPerson' -- PARAMS : '" + person +"'");
+
 		ModelAndView mav = new ModelAndView(RESULT_VIEW);
 		mav.addObject("person", person);
+
+		LOGGER.info("TEMPLATE: '" + RESULT_VIEW + "' -- DATA : '" + person + "'");
+
+
 		return mav;
 	}
 

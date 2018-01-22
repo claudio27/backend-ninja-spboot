@@ -3,6 +3,9 @@ package com.claudio.backendninja.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.claudio.backendninja.component.ExampleComponent;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,12 +22,18 @@ public class ExampleController {
 	
 	private static final String EXAMPLE_VIEW = "example";
 	
-	
+	@Autowired
+	@Qualifier("exampleComponent")
+	private ExampleComponent exampleComponent;
+
 	//Primera Forma
 	//@RequestMapping(value="exampleString", method=RequestMethod.GET)
 	@GetMapping("exampleString")
 	public String exampleString(Model model){
-		
+
+		exampleComponent.sayHello();
+
+
 		// Pasar un dato simple a traves del controlador
 //		model.addAttribute("name", "Claudio"); 
 		// Pasar un dato simple complejo del controlador
